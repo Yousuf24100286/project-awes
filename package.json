@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "migrations:gen": "drizzle-kit generate"
+    "migrations:gen": "drizzle-kit generate",
+    "migrations:push": "ts-node ./src/database/migrate"
   },
   "dependencies": {
     "dotenv": "^16.4.5",
