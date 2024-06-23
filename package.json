@@ -7,12 +7,13 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "migrations:gen": "drizzle-kit generate:pg"
+    "migrations:gen": "drizzle-kit generate"
   },
   "dependencies": {
     "dotenv": "^16.4.5",
     "drizzle-orm": "^0.31.2",
     "next": "14.2.4",
+    "path": "^0.12.7",
     "pg": "^8.12.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"

@@ -1,3 +1,6 @@
+import dotenv from 'dotenv';
+dotenv.config();
+
 const dbConfig = (() => {
   const env = process.env.NODE_ENV ? process.env.NODE_ENV : (() => { throw new Error('NODE_ENV environment variable not set!') })()
   const connectionString = process.env.DATABASE_URL ? process.env.DATABASE_URL : (() => { throw new Error('DATABASE_URL environment variable not set!') })()
