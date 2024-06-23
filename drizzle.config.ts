@@ -4,7 +4,7 @@ import dbConfig from './src/database/config'
 
 const drizzleConfig = {
   schema: './src/database/schema.ts',
-  out: './src/migrations',
+  out: './migrations',
   dialect: 'postgresql',
   dbCredentials: {
     url: dbConfig.connectionString,
