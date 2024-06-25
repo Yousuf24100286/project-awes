@@ -1,21 +1,27 @@
 import path from 'path';
 import { migrate  } from "drizzle-orm/node-postgres/migrator";
-import Database from ".";
+import db, { sql } from ".";
 
 
 (async () => {
-  await Database.start();
+  console.log(db.promise)
+  if (db.promise) {
+    await db.promise
+  } else {
+    throw new Error('DB never started - Call db.start() function')
+  }
+  console.log(db.promise)
 
   const migrationFolder = path.join(__dirname, '..', '..', 'migrations');
   console.log('migrationFolder', migrationFolder);
-  await migrate(Database.sql, {
+  await migrate(sql, {
     migrationsFolder: migrationFolder,
   }).then(() => {
     console.log('Migration done');
   }).catch((err) => {
     console.error('Migration failed', err);
   }).finally(() => {
-    Database.stop();
+    db.stop();
   });
 })().then(() => {
   console.log('Migration Script Complete');

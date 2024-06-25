@@ -1,35 +1,39 @@
 import pg from 'pg'
 import { drizzle } from "drizzle-orm/node-postgres";
 import dbConfig from './config'
-import * as dbSchema from './schema'
+import * as schema from './schema'
 
-const Database = (() => {
-  let isConnected = false
-  const client = new pg.Pool({
-    connectionString: dbConfig.connectionString
-  })
+let isConnected = false
+const client = new pg.Pool({
+  connectionString: dbConfig.connectionString
+})
+const sql = drizzle(client, {
+  schema: schema
+})
 
-  const db = drizzle(client, {
-    schema: dbSchema
-  })
+const db = (function () {
+  let promise: Promise<pg.PoolClient> | undefined = client.connect() ;
 
-  const start = async () => {
-    if (isConnected) return;
-    await client.connect()
-    isConnected = true
+  const start = () => {
+    promise = client.connect()
+    console.log(promise, 'sdlkjf')
   }
-  const stop = async () => {
-    if (!isConnected) return;
-    await client.end()
-    isConnected = false
+
+  const stop = () => {
+    client.end().then(() => promise = undefined)
   }
 
   return {
-    sql: db,
     start,
-    stop
+    stop,
+    promise
   }
-
 })()
 
-export default Database;
+db.start()
+
+export default db;
+export { 
+  schema,
+  sql
+};
