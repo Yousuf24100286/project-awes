@@ -11,6 +11,8 @@
     "migrations:push": "ts-node ./src/database/migrate"
   },
   "dependencies": {
+    "@types/bcryptjs": "^2.4.6",
+    "bcryptjs": "^2.4.3",
     "dotenv": "^16.4.5",
     "drizzle-orm": "^0.31.2",
     "next": "14.2.4",
