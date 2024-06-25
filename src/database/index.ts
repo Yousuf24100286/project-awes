@@ -16,7 +16,6 @@ const db = (function () {
 
   const start = () => {
     promise = client.connect()
-    console.log(promise, 'sdlkjf')
   }
 
   const stop = () => {
@@ -29,8 +28,6 @@ const db = (function () {
     promise
   }
 })()
-
-db.start()
 
 export default db;
 export { 

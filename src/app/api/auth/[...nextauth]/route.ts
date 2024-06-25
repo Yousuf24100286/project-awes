@@ -1,5 +1,8 @@
 import NextAuth, { AuthOptions } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
+import { sql, schema } from '@/database'
+import { eq } from "drizzle-orm";
+import { cipher } from "@/utils";
 
 const auth_secret = process.env.AUTH_SECRET ? process.env.AUTH_SECRET : (() => {throw new Error('AUTH_SECRET environment variable not set!')})()
 
@@ -13,9 +16,17 @@ export const authOptions: AuthOptions = {
         password: { label: "Password", type: "password" }
       },
       async authorize (credentials) {
-        const user = { id: "1", email: "johndoe@mail.com" }
-        if (user) {
-          return user
+        if (!credentials) {
+          return null
+        }
+        const user = await sql.query.users.findFirst({
+          where: eq(schema.users.email, credentials.email)
+        }).execute()
+        if (user && await cipher.compare(credentials.password, user.password)) {
+          return {
+            ...user,
+            id: user.id.toString()
+          }
         } else {
           return null
         }
