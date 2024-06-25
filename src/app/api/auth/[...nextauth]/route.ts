@@ -6,7 +6,9 @@ import { cipher } from "@/utils";
 
 const auth_secret = process.env.AUTH_SECRET ? process.env.AUTH_SECRET : (() => {throw new Error('AUTH_SECRET environment variable not set!')})()
 
-export const authOptions: AuthOptions = {
+// export const authOptions: AuthOptions = 
+
+const handler = NextAuth({
   secret: auth_secret,
   providers: [
     Credentials({
@@ -33,8 +35,6 @@ export const authOptions: AuthOptions = {
       }
     })
   ]
-}
-
-export const handler = NextAuth(authOptions);
+});
 
 export { handler as GET, handler as POST }

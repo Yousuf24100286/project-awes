@@ -4,13 +4,11 @@ import db, { sql } from ".";
 
 
 (async () => {
-  console.log(db.promise)
   if (db.promise) {
     await db.promise
   } else {
     throw new Error('DB never started - Call db.start() function')
   }
-  console.log(db.promise)
 
   const migrationFolder = path.join(__dirname, '..', '..', 'migrations');
   console.log('migrationFolder', migrationFolder);
